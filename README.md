@@ -31,8 +31,6 @@
 
 ## Sponsor
 
-[![Capsolver](data/capsolver.webp)](https://www.capsolver.com/?utm_source=github&utm_medium=repo&utm_campaign=scraping&utm_term=puppeteer-real-browser)
-
 [![ScrapeDo](data/sdo.gif)](https://scrape.do/?utm_source=github&utm_medium=repo_prb)
 
 ## Installation
