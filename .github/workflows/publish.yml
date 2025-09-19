@@ -1,12 +1,10 @@
-name: 🚀 Publish to NPM
+name: Manual Publish to NPM
 
 on:
-  # Automatic trigger on version tags
   push:
     tags:
       - 'v*'
   
-  # Manual trigger
   workflow_dispatch:
     inputs:
       publish_npm:
