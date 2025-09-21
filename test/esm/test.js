@@ -90,9 +90,23 @@ test('Cloudflare Turnstile', async () => {
 test('Fingerprint JS Bot Detector', async () => {
     const { page, browser } = await connect(realBrowserOption)
     await page.goto("https://fingerprint.com/products/bot-detection/");
-    await new Promise(r => setTimeout(r, 5000));
+    
+    // Wait for the bot detection section to load
+    await page.waitForSelector('.HeroSection-module--botSubTitle--2711e', { timeout: 15000 });
+    
+    // Give extra time for bot detection to complete
+    await new Promise(r => setTimeout(r, 7000));
+    
     const detect = await page.evaluate(() => {
-        return document.querySelector('.HeroSection-module--botSubTitle--2711e').textContent.includes("not") ? true : false
+        const element = document.querySelector('.HeroSection-module--botSubTitle--2711e');
+        if (!element) {
+            console.log('Bot detection element not found');
+            return false;
+        }
+        const textContent = element.textContent.toLowerCase();
+        console.log('Bot detection text:', textContent);
+        // Check if text contains "not" which indicates we are not detected as a bot
+        return textContent.includes("not") ? true : false;
     })
     await browser.close()
     assert.strictEqual(detect, true, "Fingerprint JS Bot Detector test failed!")
