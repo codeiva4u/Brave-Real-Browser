@@ -15,7 +15,11 @@
   "scripts": {
     "esm_test": "node ./test/esm/test.js",
     "cjs_test": "node ./test/cjs/test.js",
-    "update-deps": "npm install brave-real-launcher@latest brave-real-puppeteer-core@latest ghost-cursor@latest puppeteer-extra@latest tree-kill@latest xvfb@latest && npm list --depth=0"
+    "update-deps": "npm install brave-real-launcher@latest brave-real-puppeteer-core@latest ghost-cursor@latest puppeteer-extra@latest tree-kill@latest xvfb@latest && npm list --depth=0",
+    "preinstall": "echo \"🔍 Checking for dependency updates...\"",
+    "postinstall": "echo \"✅ Installation complete! Run 'npm run update-deps' to update to latest versions\"",
+    "check-updates": "npm outdated || true",
+    "upgrade-all": "npm run update-deps && echo \"📦 All dependencies updated to latest versions!\""
   },
   "keywords": [
     "cf-bypass",

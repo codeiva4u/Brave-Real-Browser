@@ -1,0 +1,59 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "description": "Auto-update all dependencies to latest versions",
+  "timezone": "Asia/Kolkata",
+  "schedule": [
+    "every weekend"
+  ],
+  "labels": [
+    "dependencies",
+    "renovate"
+  ],
+  "rangeStrategy": "replace",
+  "semanticCommits": "enabled",
+  "commitMessagePrefix": "chore(deps):",
+  "packageRules": [
+    {
+      "description": "Auto-merge all dependency updates",
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true,
+      "automergeType": "pr",
+      "automergeStrategy": "squash"
+    },
+    {
+      "description": "Group all npm dependencies together",
+      "matchManagers": ["npm"],
+      "groupName": "all npm dependencies",
+      "groupSlug": "all-npm"
+    },
+    {
+      "description": "Always update to latest for these packages",
+      "matchPackageNames": [
+        "brave-real-launcher",
+        "brave-real-puppeteer-core",
+        "ghost-cursor",
+        "puppeteer-extra",
+        "tree-kill",
+        "xvfb"
+      ],
+      "rangeStrategy": "replace",
+      "separateMajorMinor": false
+    }
+  ],
+  "npm": {
+    "stabilityDays": 0,
+    "minimumReleaseAge": "0 days"
+  },
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "assignees": ["@codeiva4u"]
+  },
+  "prConcurrentLimit": 5,
+  "prCreation": "immediate",
+  "updateNotScheduled": false,
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "📦 Dependency Updates Dashboard"
+}
