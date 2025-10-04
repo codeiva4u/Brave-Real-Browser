@@ -14,7 +14,8 @@
   "typings": "typings.d.ts",
   "scripts": {
     "esm_test": "node ./test/esm/test.js",
-    "cjs_test": "node ./test/cjs/test.js"
+    "cjs_test": "node ./test/cjs/test.js",
+    "update-deps": "npm install brave-real-launcher@latest brave-real-puppeteer-core@latest ghost-cursor@latest puppeteer-extra@latest tree-kill@latest xvfb@latest && npm list --depth=0"
   },
   "keywords": [
     "cf-bypass",
@@ -38,8 +39,8 @@
   "author": "zfc-software",
   "license": "ISC",
   "dependencies": {
-    "brave-real-launcher": "latest",
-    "brave-real-puppeteer-core": "latest",
+    "brave-real-launcher": "^1.2.15",
+    "brave-real-puppeteer-core": "^24.23.0-patch.1",
     "ghost-cursor": "^1.4.1",
     "puppeteer-extra": "^3.3.6",
     "tree-kill": "^1.2.2",
