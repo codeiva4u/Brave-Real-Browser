@@ -47,6 +47,38 @@ if you are using linux:
 sudo apt-get install xvfb
 ```
 
+### 🚀 Auto-Update Feature
+
+This package **automatically updates all dependencies to their latest versions** whenever you run `npm install`. This ensures you always have the most recent bug fixes and security patches.
+
+**How it works:**
+- ✅ Automatically checks for outdated dependencies on every `npm install`
+- ✅ Updates only the core dependencies (brave-real-launcher, brave-real-puppeteer-core, etc.)
+- ✅ Works in CI/CD environments (GitHub Actions, etc.)
+- ✅ Can be disabled if needed
+
+**To disable auto-update:**
+```bash
+# Temporarily disable for one install
+SKIP_AUTO_UPDATE=true npm install
+
+# Or set environment variable
+export SKIP_AUTO_UPDATE=true
+npm install
+```
+
+**Manual update commands:**
+```bash
+# Check for outdated dependencies
+npm run check-updates
+
+# Update all dependencies manually
+npm run update-deps
+
+# Or use the convenient command
+npm run upgrade-all
+```
+
 ## Include
 
 ### CommonJS
