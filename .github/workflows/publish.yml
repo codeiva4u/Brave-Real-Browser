@@ -62,14 +62,23 @@ jobs:
           npm version patch --no-git-tag-version
           NEW_VERSION=$(node -p "require('./package.json').version")
           
-          echo "old_version=$OLD_VERSION" >> $GITHUB_OUTPUT
-          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          # Use GITHUB_OUTPUT instead of deprecated set-output
+          echo "old_version=$OLD_VERSION" >> "$GITHUB_OUTPUT"
+          echo "new_version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
           
           npm install --package-lock-only
           
           git add package.json package-lock.json
           git commit -m "Auto increment v$OLD_VERSION -> v$NEW_VERSION [skip ci]"
-          git tag "v$NEW_VERSION"
+          
+          # Check if tag already exists
+          if git rev-parse "v$NEW_VERSION" >/dev/null 2>&1; then
+            echo "⚠️ Tag v$NEW_VERSION already exists, skipping tag creation"
+            echo "skip_release=true" >> "$GITHUB_OUTPUT"
+          else
+            git tag "v$NEW_VERSION"
+            echo "skip_release=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Push Changes
         run: |
@@ -78,42 +87,72 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
+      - name: Check if Version Already Published
+        id: npm_check
+        run: |
+          PACKAGE_VERSION="${{ steps.version.outputs.new_version }}"
+          
+          if npm view "brave-real-browser@$PACKAGE_VERSION" version 2>/dev/null; then
+            echo "⚠️ Version $PACKAGE_VERSION already published on npm, skipping"
+            echo "skip_publish=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "✅ Version $PACKAGE_VERSION not found on npm, proceeding"
+            echo "skip_publish=false" >> "$GITHUB_OUTPUT"
+          fi
+      
       - name: Publish to NPM
         if: |
-          github.event_name == 'push' ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.publish == 'true')
+          steps.npm_check.outputs.skip_publish != 'true' &&
+          (
+            github.event_name == 'push' ||
+            (github.event_name == 'workflow_dispatch' && github.event.inputs.publish == 'true')
+          )
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create Release
-        if: success()
-        uses: actions/create-release@v1
+        if: success() && steps.version.outputs.skip_release != 'true'
+        run: |
+          TAG_NAME="v${{ steps.version.outputs.new_version }}"
+          NEW_VERSION="${{ steps.version.outputs.new_version }}"
+          OLD_VERSION="${{ steps.version.outputs.old_version }}"
+          
+          # Check if release already exists
+          if gh release view "$TAG_NAME" >/dev/null 2>&1; then
+            echo "⚠️ Release $TAG_NAME already exists, skipping"
+            exit 0
+          fi
+          
+          # Create release body
+          cat > release_body.md << EOF
+          ## Version $NEW_VERSION
+          
+          Auto-incremented from $OLD_VERSION to $NEW_VERSION
+          
+          ### Installation
+          \`\`\`bash
+          npm install brave-real-browser@$NEW_VERSION
+          \`\`\`
+          
+          ### Usage
+          \`\`\`javascript
+          const { connect } = require('brave-real-browser');
+          const { browser, page } = await connect({
+            headless: false,
+            turnstile: true
+          });
+          \`\`\`
+          EOF
+          
+          # Create GitHub release using gh CLI
+          gh release create "$TAG_NAME" \
+            --title "v$NEW_VERSION" \
+            --notes-file release_body.md
+          
+          echo "✅ Created GitHub release $TAG_NAME"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        with:
-          tag_name: v${{ steps.version.outputs.new_version }}
-          release_name: v${{ steps.version.outputs.new_version }}
-          body: |
-            ## Version ${{ steps.version.outputs.new_version }}
-            
-            Auto-incremented from ${{ steps.version.outputs.old_version }} to ${{ steps.version.outputs.new_version }}
-            
-            ### Installation
-            ```bash
-            npm install brave-real-browser@${{ steps.version.outputs.new_version }}
-            ```
-            
-            ### Usage
-            ```javascript
-            const { connect } = require('brave-real-browser');
-            const { browser, page } = await connect({
-              headless: false,
-              turnstile: true
-            });
-            ```
-          draft: false
-          prerelease: false
 
       - name: Summary
         if: always()
