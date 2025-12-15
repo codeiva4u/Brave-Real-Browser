@@ -43,7 +43,7 @@
   "author": "zfc-software",
   "license": "ISC",
   "dependencies": {
-    "brave-real-launcher": "^1.2.28",
+    "brave-real-launcher": "^1.2.29",
     "brave-real-puppeteer-core": "^24.33.0-patch.1",
     "ghost-cursor": "^1.4.1",
     "puppeteer-extra": "^3.3.6",
