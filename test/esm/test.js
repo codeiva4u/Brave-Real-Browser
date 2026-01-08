@@ -3,54 +3,49 @@ import assert from 'node:assert';
 import { connect } from '../../lib/esm/index.mjs';
 
 const realBrowserOption = {
-    args: ["--start-minimized"],
     turnstile: true,
     headless: false,
-    // disableXvfb: true,
-    // ignoreAllFlags:true,
     customConfig: {},
-    connectOption: {
-        defaultViewport: null
-    },
     plugins: []
 }
 
+// Shared browser instance for all tests
+let browser = null;
+let page = null;
 
-// test('Puppeteer Extra Plugin', async () => {
-//     /*
-//     Run with:
-//     npm i puppeteer-extra-plugin-click-and-wait
-//     */
-//     const clickAndWait = await (await import('puppeteer-extra-plugin-click-and-wait')).default
-//     realBrowserOption.plugins = [
-//         clickAndWait()
-//     ]
-//     const { page, browser } = await connect(realBrowserOption)
-//     await page.goto("https://google.com", { waitUntil: "domcontentloaded" })
-//     await page.clickAndWaitForNavigation('body')
-//     await browser.close()
-// })
+// Setup - Run once before all tests
+test.before(async () => {
+    console.log('🚀 Starting browser for all tests...');
+    const result = await connect(realBrowserOption);
+    browser = result.browser;
+    page = result.page;
+    console.log('✅ Browser started successfully');
+});
+
+// Teardown - Run once after all tests
+test.after(async () => {
+    console.log('🏁 Closing browser after all tests...');
+    if (browser) {
+        await browser.close();
+        console.log('✅ Browser closed successfully');
+    }
+});
 
 test('DrissionPage Detector', async () => {
-    const { page, browser } = await connect(realBrowserOption)
     await page.goto("https://web.archive.org/web/20240913054632/https://drissionpage.pages.dev/");
     await page.realClick("#detector")
     let result = await page.evaluate(() => { return document.querySelector('#isBot span').textContent.includes("not") ? true : false })
-    await browser.close()
     assert.strictEqual(result, true, "DrissionPage Detector test failed!")
 })
 
 test('Brotector, a webdriver detector', async () => {
-    const { page, browser } = await connect(realBrowserOption)
     await page.goto("https://kaliiiiiiiiii.github.io/brotector/");
     await new Promise(r => setTimeout(r, 3000));
     let result = await page.evaluate(() => { return document.querySelector('#table-keys').getAttribute('bgcolor') })
-    await browser.close()
     assert.strictEqual(result === "darkgreen", true, "Brotector, a webdriver detector test failed!")
 })
 
 test('Cloudflare WAF', async () => {
-    const { page, browser } = await connect(realBrowserOption)
     await page.goto("https://nopecha.com/demo/cloudflare");
     let verify = null
     let startDate = Date.now()
@@ -62,13 +57,11 @@ test('Cloudflare WAF', async () => {
         }).catch(() => null)
         await new Promise(r => setTimeout(r, 2000));
     }
-    await browser.close()
     assert.strictEqual(verify === true, true, "Cloudflare WAF test failed! (Site may be blocking automated access)")
 })
 
 
 test('Cloudflare Turnstile', async () => {
-    const { page, browser } = await connect(realBrowserOption)
     await page.goto("https://2captcha.com/demo/cloudflare-turnstile");
     await page.waitForSelector('.cf-turnstile')
     let token = null
@@ -84,15 +77,12 @@ test('Cloudflare Turnstile', async () => {
         })
         await new Promise(r => setTimeout(r, 1000));
     }
-    await browser.close()
-    // if (token !== null) console.log('Cloudflare Turnstile Token: ' + token);
     assert.strictEqual(token !== null, true, "Cloudflare turnstile test failed!")
 })
 
 
 
 test('Fingerprint JS Bot Detector', async () => {
-    const { page, browser } = await connect(realBrowserOption)
     await page.goto("https://fingerprint.com/products/bot-detection/");
     await new Promise(r => setTimeout(r, 8000));
     const detect = await page.evaluate(() => {
@@ -114,30 +104,24 @@ test('Fingerprint JS Bot Detector', async () => {
         }
         return false;
     })
-    await browser.close()
     assert.strictEqual(detect, true, "Fingerprint JS Bot Detector test failed!")
 })
 
 
 // If you fail this test, your ip address probably has a high spam score. Please use a mobile or clean ip address.
 test('Datadome Bot Detector', async (t) => {
-    const { page, browser } = await connect(realBrowserOption)
     await page.goto("https://antoinevastel.com/bots/datadome");
     const check = await page.waitForSelector('nav #navbarCollapse').catch(() => null)
-    await browser.close()
     assert.strictEqual(check ? true : false, true, "Datadome Bot Detector test failed! [This may also be because your ip address has a high spam score. Please try with a clean ip address.]")
 })
 
 // If this test fails, please first check if you can access https://antcpt.com/score_detector/
 test('Recaptcha V3 Score (hard)', async () => {
-    const { page, browser } = await connect(realBrowserOption)
     await page.goto("https://antcpt.com/score_detector/");
     await page.realClick("button")
     await new Promise(r => setTimeout(r, 5000));
     const score = await page.evaluate(() => {
         return document.querySelector('big').textContent.replace(/[^0-9.]/g, '')
     })
-    await browser.close()
-    // if (Number(score) >= 0.7) console.log('Recaptcha V3 Score: ' + score);
     assert.strictEqual(Number(score) >= 0.7, true, "(please first check if you can access https://antcpt.com/score_detector/.) Recaptcha V3 Score (hard) should be >=0.7. Score Result: " + score)
 })
