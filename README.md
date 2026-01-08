@@ -3,11 +3,11 @@
 
 <br/>
 <p align="center">
-  <a href="https://github.com/zfcsoftware/puppeteer-real-browser">
+  <a href="https://github.com/codeiva4u/Brave-Real-Browser">
     <img src="https://github.com/zfcsoftware/puppeteer-real-browser/assets/123484092/cc8b5fb9-504a-4fd3-97f6-a51990bb4303" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Puppeteer Real Browser</h3>
+  <h3 align="center">Brave Real Browser</h3>
 
   <p align="center">
     This package prevents Puppeteer from being detected as a bot in services like Cloudflare and allows you to pass captchas without any problems. It behaves like a real browser.
@@ -22,11 +22,11 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/github/contributors/zfcsoftware/puppeteer-real-browser?color=dark-green" alt="Contributors" />
-  <img src="https://img.shields.io/github/forks/zfcsoftware/puppeteer-real-browser?style=social" alt="Forks" />
-  <img src="https://img.shields.io/github/stars/zfcsoftware/puppeteer-real-browser?style=social" alt="Stargazers" />
-  <img src="https://img.shields.io/github/issues/zfcsoftware/puppeteer-real-browser" alt="Issues" />
-  <img src="https://img.shields.io/github/license/zfcsoftware/puppeteer-real-browser" alt="License" />
+  <img src="https://img.shields.io/github/contributors/codeiva4u/Brave-Real-Browser?color=dark-green" alt="Contributors" />
+  <img src="https://img.shields.io/github/forks/codeiva4u/Brave-Real-Browser?style=social" alt="Forks" />
+  <img src="https://img.shields.io/github/stars/codeiva4u/Brave-Real-Browser?style=social" alt="Stargazers" />
+  <img src="https://img.shields.io/github/issues/codeiva4u/Brave-Real-Browser" alt="Issues" />
+  <img src="https://img.shields.io/github/license/codeiva4u/Brave-Real-Browser" alt="License" />
 </p>
 
 ## Sponsor
@@ -38,7 +38,7 @@
 If you are using a Linux operating system, xvfb must be installed for the library to work correctly.
 
 ```bash
-npm i puppeteer-real-browser
+npm i brave-real-browser
 ```
 
 if you are using linux:
@@ -52,7 +52,7 @@ sudo apt-get install xvfb
 ### CommonJS
 
 ```js
-const { connect } = require("puppeteer-real-browser");
+const { connect } = require("brave-real-browser");
 
 const start = async () => {
   const { page, browser } = await connect();
@@ -62,7 +62,7 @@ const start = async () => {
 ### Module
 
 ```js
-import { connect } from "puppeteer-real-browser";
+import { connect } from "brave-real-browser";
 
 const { page, browser } = await connect();
 ```
@@ -70,7 +70,7 @@ const { page, browser } = await connect();
 ## Usage
 
 ```js
-const { connect } = require("puppeteer-real-browser");
+const { connect } = require("brave-real-browser");
 
 async function test() {
   const { browser, page } = await connect({
@@ -102,9 +102,9 @@ test();
 **headless**: The default value is false. Values such as “new”, true, “shell” can also be sent, but it works most stable when false is used.
 
 **args:** If there is an additional flag you want to add when starting Chromium, you can send it with this string.
-Supported flags: https://github.com/GoogleChrome/chrome-launcher/blob/main/docs/chrome-flags-for-tools.md
+Supported flags: https://github.com/AaronRai123/brave-real-launcher
 
-**customConfig:** https://github.com/GoogleChrome/chrome-launcher The browser is initialized with this library. What you send with this object is added as a direct initialization argument. You should use the initialization values in this repo. You should set the userDataDir option here and if you want to specify a custom chrome path, you should set it with the chromePath value.
+**customConfig:** https://github.com/AaronRai123/brave-real-launcher The browser is initialized with this library. What you send with this object is added as a direct initialization argument. You should use the initialization values in this repo. You should set the userDataDir option here and if you want to specify a custom Brave path, you should set it with the bravePath value.
 
 **turnstile:** Cloudflare Turnstile automatically clicks on Captchas if set to true
 
@@ -127,7 +127,7 @@ npm i puppeteer-extra-plugin-click-and-wait
 ```js
 const test = require("node:test");
 const assert = require("node:assert");
-const { connect } = require("puppeteer-real-browser");
+const { connect } = require("brave-real-browser");
 
 test("Puppeteer Extra Plugin", async () => {
   const { page, browser } = await connect({
@@ -154,31 +154,31 @@ You can use the Dockerfile file in the main directory to use this library with d
 To run a test, you can follow these steps
 
 ```bash
-git clone https://github.com/zfcsoftware/puppeteer-real-browser
+git clone https://github.com/codeiva4u/Brave-Real-Browser.git
 ```
 
 ```bash
-cd puppeteer-real-browser
+cd brave-real-browser
 ```
 
 ```bash
-docker build -t puppeteer-real-browser-project .
+docker build -t brave-real-browser-project .
 ```
 
 ```bash
-docker run puppeteer-real-browser-project
+docker run brave-real-browser-project
 ```
 
 ## Support Us
 
-This library is completely open source and is constantly being updated. Please star this repo to support this project. Starring and supporting the project will ensure that it receives updates. If you want to support it further, you can consider sponsoring me (https://github.com/sponsors/zfcsoftware)
+This library is completely open source and is constantly being updated. Please star this repo to support this project. Starring and supporting the project will ensure that it receives updates. If you want to support it further, you can consider sponsoring me (https://github.com/sponsors/codeiva4u)
 
 ## Quick Questions and Answers
 
 ### I Cannot Access Functions in Window Object What Should I Do?
 
 This problem is probably caused by the runtime being closed by the rebrowser used.
-https://github.com/zfcsoftware/puppeteer-real-browser/tree/access-window
+https://github.com/codeiva4u/Brave-Real-Browser/tree/access-window
 I created a branch for this. You can access the value you want by adding javascript to the page source with puppeteer-intercept-and-modify-requests as done in success.js. If you know about the Chrome plugin, you can also use it.
 
 ### page.setViewport method is not working, what should I do?
@@ -189,7 +189,7 @@ As with the initialization arguments in the test module, you can set the default
 
 using puppeteer-core patched with rebrowser. Tested with the challenging sites in the test file in headless false mode and passed with flying colors. The only known issue is that the mouse screeenX does not match the mouse position. This has been patched in the library.
 
-The ghost-cursor is included in the library. (https://github.com/zfcsoftware/puppeteer-real-browser/blob/2a5fba37a85c15625fb3c8d1f7cf8dcb109b9492/lib/cjs/module/pageController.js#L54) You can use ghost-cursor with page.realCursor. page.click It is recommended to use page.realClick instead of page.click.
+The ghost-cursor is included in the library. (https://github.com/codeiva4u/Brave-Real-Browser/blob/2a5fba37a85c15625fb3c8d1f7cf8dcb109b9492/lib/cjs/module/pageController.js#L54) You can use ghost-cursor with page.realCursor. page.click It is recommended to use page.realClick instead of page.click.
 
 ### What Makes This Library Special?
 
@@ -205,7 +205,7 @@ Please see the answers in the link above. When there is no Google session, no ma
 
 ## License
 
-Distributed under the MIT License. See [LICENSE](https://github.com/zfcsoftware/puppeteer-real-browser/blob/main/LICENSE.md) for more information.
+Distributed under the MIT License. See [LICENSE](https://github.com/codeiva4u/Brave-Real-Browser/blob/main/LICENSE.md) for more information.
 
 ## Thank You
 
