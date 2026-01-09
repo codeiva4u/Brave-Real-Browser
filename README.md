@@ -1,37 +1,3 @@
-> [!WARNING]
-> This repo will no longer receive updates. Thank you to everyone who supported it.
-
-<br/>
-<p align="center">
-  <a href="https://github.com/codeiva4u/Brave-Real-Browser">
-    <img src="https://github.com/zfcsoftware/puppeteer-real-browser/assets/123484092/cc8b5fb9-504a-4fd3-97f6-a51990bb4303" alt="Logo" width="80" height="80">
-  </a>
-
-  <h3 align="center">Brave Real Browser</h3>
-
-  <p align="center">
-    This package prevents Puppeteer from being detected as a bot in services like Cloudflare and allows you to pass captchas without any problems. It behaves like a real browser.
-    <br/>
-    <br/>
-    If you are only interested in Cloudflare WAF, please check this repo:<br/> https://github.com/zfcsoftware/cf-clearance-scraper
-  </p>
-</p>
-
-<p align="center">
-<video src='https://github.com/user-attachments/assets/5dddca09-6941-42e9-9427-5c666632483f'/>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/github/contributors/codeiva4u/Brave-Real-Browser?color=dark-green" alt="Contributors" />
-  <img src="https://img.shields.io/github/forks/codeiva4u/Brave-Real-Browser?style=social" alt="Forks" />
-  <img src="https://img.shields.io/github/stars/codeiva4u/Brave-Real-Browser?style=social" alt="Stargazers" />
-  <img src="https://img.shields.io/github/issues/codeiva4u/Brave-Real-Browser" alt="Issues" />
-  <img src="https://img.shields.io/github/license/codeiva4u/Brave-Real-Browser" alt="License" />
-</p>
-
-## Sponsor
-
-[![ScrapeDo](data/sdo.gif)](https://scrape.do/?utm_source=github&utm_medium=repo_prb)
 
 ## Installation
 
