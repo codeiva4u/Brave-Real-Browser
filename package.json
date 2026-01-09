@@ -36,8 +36,8 @@
   "author": "codeiva4u",
   "license": "ISC",
   "dependencies": {
-    "brave-real-launcher": "^1.2.40",
-    "brave-real-puppeteer-core": "^24.34.0-patch.5",
+    "brave-real-launcher": "file:../Brave-Real-Launcher",
+    "brave-real-puppeteer-core": "file:../Brave-Real-Puppeteer-Playwrite-Core/dist/brave-real-puppeteer-core",
     "ghost-cursor": "^1.4.1",
     "puppeteer-extra": "^3.3.6",
     "tree-kill": "^1.2.2",
