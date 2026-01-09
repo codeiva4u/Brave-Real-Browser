@@ -160,6 +160,13 @@ git clone https://github.com/codeiva4u/Brave-Real-Browser.git
 ```bash
 cd brave-real-browser
 ```
+```bash
+npm run cjs_test
+```
+
+```bash
+npm run esm_test
+```
 
 ```bash
 docker build -t brave-real-browser-project .
