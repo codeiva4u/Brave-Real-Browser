@@ -40,6 +40,8 @@
     "brave-real-puppeteer-core": "^24.34.0-patch.11",
     "ghost-cursor": "^1.4.1",
     "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-adblocker": "^2.13.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "tree-kill": "^1.2.2",
     "xvfb": "^0.4.0"
   },
