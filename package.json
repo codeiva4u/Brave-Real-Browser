@@ -1,6 +1,6 @@
 {
   "name": "brave-real-browser",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "This package is designed to bypass puppeteer's bot-detecting captchas such as Cloudflare. It acts like a real browser and can be managed with puppeteer.",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.mjs",
@@ -36,8 +36,8 @@
   "author": "codeiva4u",
   "license": "ISC",
   "dependencies": {
-    "brave-real-launcher": "file:../Brave-Real-Launcher",
-    "brave-real-puppeteer-core": "file:../Brave-Real-Puppeteer-Playwrite-Core/dist/brave-real-puppeteer-core",
+    "brave-real-launcher": "^1.2.48",
+    "brave-real-puppeteer-core": "^24.34.0-patch.11",
     "ghost-cursor": "^1.4.1",
     "puppeteer-extra": "^3.3.6",
     "tree-kill": "^1.2.2",
